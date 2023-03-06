@@ -4,7 +4,7 @@ const App = () => {
   const getWeather = async (latitude, longitude) => {
     try {
       const responde = await fetch(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid={API 1d4407cd8e297ed94b328101b6d05461}`,
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=API 1d4407cd8e297ed94b328101b6d05461`,
       );
       const data = await responde.json();
 
