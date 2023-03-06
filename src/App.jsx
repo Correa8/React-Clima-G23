@@ -4,7 +4,7 @@ const App = () => {
   const getWeather = async (latitude, longitude) => {
     try {
       const responde = await fetch(
-        `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=1d4407cd8e297ed94b328101b6d05461`,
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1d4407cd8e297ed94b328101b6d05461`,
       );
       const data = await responde.json();
 
@@ -31,11 +31,9 @@ const App = () => {
   }, []);
   return (
     <div classNAme="app">
-      {/*       <img src={Fondo} alt="fondo" className=" " />
-       */}
       <div className="all">
         <div className="impu">
-          <input placeholder='Enter place'/>
+          <input placeholder="Enter place" />
         </div>
         <div className="container">
           <div className="top">
