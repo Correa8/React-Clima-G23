@@ -1,64 +1,79 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Loader from './components/Loader';
 
 const App = () => {
-  const getWeather = async (latitude, longitude) => {
-    try {
-      const responde = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1d4407cd8e297ed94b328101b6d05461`,
-      );
-      const data = await responde.json();
-
-      console.log({ data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    let latitude;
-    let longitude;
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
-        getWeather(latitude, longitude);
-      },
-      (error) => {
-        throw error;
-      },
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [location, setLocation] = useState(null);
+  navigator.geolocation.getCurrentPosition((position) => {
+    setLongitude(position.coords.longitude);
+    setLatitude(position.coords.latitude);
+    // console.log(latitude)
+    console.log(longitude);
+    console.log(latitude);
+  });
+  const getWeather = async () => {
+    const res = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1d4407cd8e297ed94b328101b6d05461`,
     );
-  }, []);
+    console.log(res.data);
+    setLocation(res.data);
+  };
+  useEffect(() => {
+    if (latitude != null && longitude != null) {
+      getWeather();
+    }
+  }, [latitude]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const inputCountry = form.placeNameInpu;
+    setLocation(inputCountry.value);
+    form.reset();
+  };
   return (
     <div classNAme="app">
       <div className="all">
-        <div className="impu">
-          <input placeholder="Enter place" />
-        </div>
-        <div className="container">
-          <div className="top">
-            <div className="location">
-              <p>Jardin</p>
+        {!location ? (
+          <Loader />
+        ) : (
+          <>
+            <div className="impu">
+              <form onSubmit={handleSubmit} className="  gap-3">
+                <input type="text" placeholder="Enter Place" id="placeNameInput" />
+                <input type="submit" value="Search" />
+              </form>
             </div>
-            <div className="temp">
-              <h2>19°C</h2>
+            <div className="container">
+              <div className="top">
+                <div className="location">
+                  <p>{location?.name} </p>
+                </div>
+                <div className="temp">
+                  <h2>{Math.floor(location?.main.temp - 273.15)}°C </h2>
+                </div>
+                <div className="description">
+                  <p>{location?.weather[0].description} </p>
+                </div>
+              </div>
+              {/* <div className="botton">
+                <div className="estatus">
+                  <p>viento</p>
+                </div>
+                <div className="presion">
+                  <p>presion</p>
+                </div>
+                <div className="vista">
+                  <p>despejado</p>
+                </div>
+              </div> */}
             </div>
-            <div className="description">
-              <p>sun</p>
-            </div>
-          </div>
-          <div className="botton">
-            <div className="estatus">
-              <p>viento</p>
-            </div>
-            <div className="presion">
-              <p>presion</p>
-            </div>
-            <div className="vista">
-              <p>despejado</p>
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
