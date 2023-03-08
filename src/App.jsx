@@ -1,47 +1,34 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const App = () => {
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [location, setLocation] = useState(null);
+  const getWeather = async (latitude, longitude) => {
+    try {
+      const responde = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1d4407cd8e297ed94b328101b6d05461`,
+      );
+      const data = await responde.json();
 
-  
-   navigator.geolocation.getCurrentPosition(
-    (position) => {
-      setLongitude(position.coords.longitude);
-      setLatitude(position.coords.latitude);
-      // console.log(latitude)
-      console.log(longitude)
-      console.log(latitude)
+      console.log({ data });
+    } catch (error) {
+      console.log(error);
     }
-  )
-    const getWeather = async () =>{
-      const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1d4407cd8e297ed94b328101b6d05461`);
-      console.log(res.data)
-      setLocation(res.data)
-    }
+  };
 
-    useEffect(() => {
-      if(latitude != null && longitude != null){
-        getWeather()
-      }
-    },[latitude])
+  useEffect(() => {
+    let latitude;
+    let longitude;
 
-  // const getWeather = async (latitude, longitude) => {
-  //   try {
-  //     const res = await axios.get(
-  //       `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=1d4407cd8e297ed94b328101b6d05461`,
-  //     );
-
-  //       // setLocation(res.data[0])
-  //     console.log({ data });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        latitude = position.coords.latitude;
+        longitude = position.coords.longitude;
+        getWeather(latitude, longitude);
+      },
+      (error) => {
+        throw error;
+      },
+    );
+  }, []);
   return (
     <div className="app">
       <div className="all">
@@ -51,18 +38,18 @@ const App = () => {
         <div className="container">
           <div className="top">
             <div className="location">
-              <p>{location?.name} </p>
+              <p>Jardin</p>
             </div>
             <div className="temp">
-              <h2>{Math.floor(location?.main.temp - 273.15)}°C </h2>
+              <h2>19°C</h2>
             </div>
             <div className="description">
-              <p>{location?.weather[0].description} </p>
+              <p>sun</p>
             </div>
           </div>
           <div className="botton">
             <div className="estatus">
-              <p></p>
+              <p>viento</p>
             </div>
             <div className="presion">
               <p>presion</p>
