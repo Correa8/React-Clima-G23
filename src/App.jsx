@@ -24,24 +24,22 @@ const App = () => {
       getWeather();
     }
   }, [latitude]);
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
-    const inputCountry = form.placeNameInpu;
-    setLocation(inputCountry.value);
     form.reset();
   };
 
   return (
-    <div classNAme="app">
+    <div className="app">
       <div className="all">
         {!location ? (
           <Loader />
         ) : (
           <>
             <div className="impu">
-              <form onSubmit={()=> handleSubmit()} className="  gap-3">
+              <form onSubmit={handleSubmit} className="  gap-3">
                 <input type="text" placeholder="Enter Place" id="placeNameInput" />
                 <input type="submit" value="Search" />
               </form>
@@ -54,11 +52,11 @@ const App = () => {
                 <div className="temp">
                   <h2>{Math.floor(location?.main.temp - 273.15)}°C </h2>
                 </div>
-                <div className="description">
+                <div className="flex description">
+                  <img className='w-48 h-48' src={`https://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`} alt="" />
                   <p>{location?.weather[0].description} </p>
                 </div>
               </div>
-              /
               <div className="botton">
                 <div className="estatus">
                   <p>viento</p>

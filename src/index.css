@@ -52,9 +52,14 @@ h2{
 
 .all .description {
   position: relative;
-  right: -80%;
+  right: -60%;
   transform-origin: 0 0;
   transform: rotate(269deg);
+  flex-direction:  column;
+ 
+}
+.description img{
+  transform: rotate(-269deg);
 }
 .all .botton{
   display:flex;
