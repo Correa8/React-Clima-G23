@@ -53,7 +53,11 @@ const App = () => {
                   <h2>{Math.floor(location?.main.temp - 273.15)}°C </h2>
                 </div>
                 <div className="flex description">
-                  <img className='w-48 h-48' src={`https://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`} alt="" />
+                  <img
+                    className="w-48 h-48"
+                    src={`https://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                    alt=""
+                  />
                   <p>{location?.weather[0].description} </p>
                 </div>
               </div>
