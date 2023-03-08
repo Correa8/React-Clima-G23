@@ -6,10 +6,13 @@ const App = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [location, setLocation] = useState(null);
+  const [data, setData] = useState({})
+  const [ubicacion, setUbicacion] = useState('')
+
+  /* Positionlogic */
   navigator.geolocation.getCurrentPosition((position) => {
     setLongitude(position.coords.longitude);
     setLatitude(position.coords.latitude);
-    // console.log(latitude)
     console.log(longitude);
     console.log(latitude);
   });
@@ -26,6 +29,19 @@ const App = () => {
     }
   }, [latitude]);
 
+  /* Url place*/
+   const url =`https://api.openweathermap.org/data/2.5/weather?q=${ubicacion}&appid=1d4407cd8e297ed94b328101b6d05461`
+
+   const searchLocation = (event) => {
+    if (event.key === 'Enter') {
+      axios.get(url).then((response) => {
+        setData(response.data)
+        console.log(response.data)
+      })
+      setUbicacion('')
+    }
+  }
+/*CLick*/ 
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -34,6 +50,8 @@ const App = () => {
     const inputCountry = form.placeNameInpu;
     setLocation(inputCountry.value);
     form.reset();
+
+    
   };
   return (
     <div classNAme="app">
@@ -44,7 +62,11 @@ const App = () => {
           <>
             <div className="impu">
               <form onSubmit={handleSubmit} className="  gap-3">
-                <input type="text" placeholder="Enter Place" id="placeNameInput" />
+                <input
+                value={location}
+                onChange={event => setUbicacion(event.target.value)}
+                onKeyPress={searchLocation}
+                type="text" placeholder="Enter Place" id="placeNameInput" />
                 <input type="submit" value="Search" />
               </form>
             </div>
