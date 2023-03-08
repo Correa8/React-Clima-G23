@@ -19,16 +19,21 @@ const App = () => {
     console.log(res.data);
     setLocation(res.data);
   };
+
   useEffect(() => {
-    if (latitude != null && longitude != null) {
       getWeather();
-    }
   }, [latitude]);
 
-  const handleSubmit = (event) => {
+  const getWeatherByCountry = async (value) =>{
+    const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=1d4407cd8e297ed94b328101b6d05461`)
+    setLocation(res.data)
+  }
+  const handleSubmit = (event) => { 
     event.preventDefault();
     const form = event.target;
+    getWeatherByCountry(form.placeNameInput.value)
     form.reset();
+    
   };
 
   return (
@@ -41,13 +46,12 @@ const App = () => {
             <div className="impu">
               <form onSubmit={handleSubmit} className="  gap-3">
                 <input type="text" placeholder="Enter Place" id="placeNameInput" />
-                <input type="submit" value="Search" />
               </form>
             </div>
             <div className="container">
               <div className="top">
                 <div className="location">
-                  <p>{location?.name} </p>
+                  <p>{location?.name}, {location.sys.country} </p>
                 </div>
                 <div className="temp">
                   <h2>{Math.floor(location?.main.temp - 273.15)}°C </h2>
@@ -59,13 +63,13 @@ const App = () => {
               </div>
               <div className="botton">
                 <div className="estatus">
-                  <p>viento</p>
+                  <p>Wind:</p>
                 </div>
                 <div className="presion">
-                  <p>presion</p>
+                  <p>Pressure:</p>
                 </div>
                 <div className="vista">
-                  <p>despejado</p>
+                  <p>despejado:</p>
                 </div>
               </div>
             </div>
