@@ -60,7 +60,8 @@ const App = () => {
                   <p>{location?.weather[0].description} </p>
                 </div>
               </div>
-              {/* <div className="botton">
+              /
+              <div className="botton">
                 <div className="estatus">
                   <p>viento</p>
                 </div>
@@ -70,7 +71,7 @@ const App = () => {
                 <div className="vista">
                   <p>despejado</p>
                 </div>
-              </div> */}
+              </div>
             </div>
           </>
         )}
