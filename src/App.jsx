@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Loader from './components/Loader';
+import React, { useEffect } from 'react';
 
 const App = () => {
   const [latitude, setLatitude] = useState(null);
@@ -20,23 +18,21 @@ const App = () => {
     console.log(res.data);
     setLocation(res.data);
   };
+
   useEffect(() => {
-    if (latitude != null && longitude != null) {
-      getWeather();
-    }
-  }, [latitude]);
+    
+    const handleSubmit = (event) => {
+      event.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+      const form = event.target;
 
-    const form = event.target;
-
-    const inputCountry = form.placeNameInpu;
-    setLocation(inputCountry.value);
-    form.reset();
-  };
+      const inputCountry = form.placeNameInpu;
+      setLocation(inputCountry.value);
+      form.reset();
+    };
+  });
   return (
-    <div classNAme="app">
+    <div className="app">
       <div className="all">
         {!location ? (
           <Loader />
