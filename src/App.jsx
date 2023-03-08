@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Loader from './components/Loader';
 const App = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -18,28 +19,29 @@ const App = () => {
     console.log(res.data);
     setLocation(res.data);
   };
-
   useEffect(() => {
-    
-    const handleSubmit = (event) => {
-      event.preventDefault();
+    if (latitude != null && longitude != null) {
+      getWeather();
+    }
+  }, [latitude]);
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const inputCountry = form.placeNameInpu;
+    setLocation(inputCountry.value);
+    form.reset();
+  };
 
-      const form = event.target;
-
-      const inputCountry = form.placeNameInpu;
-      setLocation(inputCountry.value);
-      form.reset();
-    };
-  });
   return (
-    <div className="app">
+    <div classNAme="app">
       <div className="all">
         {!location ? (
           <Loader />
         ) : (
           <>
             <div className="impu">
-              <form onSubmit={handleSubmit} className="  gap-3">
+              <form onSubmit={()=> handleSubmit()} className="  gap-3">
                 <input type="text" placeholder="Enter Place" id="placeNameInput" />
                 <input type="submit" value="Search" />
               </form>
@@ -75,5 +77,4 @@ const App = () => {
     </div>
   );
 };
-
 export default App;
