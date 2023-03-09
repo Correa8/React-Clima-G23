@@ -12,6 +12,7 @@ img{
   box-sizing:border-box;
   margin: 0;
   padding:0;
+  overflow: hidden;
 }
 p{
 font-size: 1.6rem
@@ -103,6 +104,18 @@ form{
   background-image: url("./assets/Sun.jpj");
 }
 
-
+@media (max-width: 570px) {
+  .all .description{
+  right: -50%;
+  transform-origin: 0 0;
+  transform: rotate(0);
+  flex-direction:  column;
+bottom: 65%;
+  }
+  .description img{
+    transform: rotate(0);
+    
+  }
+}
 
 
