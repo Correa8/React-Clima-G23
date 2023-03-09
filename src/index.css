@@ -12,6 +12,7 @@ img{
   box-sizing:border-box;
   margin: 0;
   padding:0;
+  overflow: hidden;
 }
 p{
 font-size: 1.6rem
@@ -52,9 +53,14 @@ h2{
 
 .all .description {
   position: relative;
-  right: -80%;
+  right: -60%;
   transform-origin: 0 0;
   transform: rotate(269deg);
+  flex-direction:  column;
+ 
+}
+.description img{
+  transform: rotate(-269deg);
 }
 .all .botton{
   display:flex;
@@ -85,6 +91,31 @@ form{
   
 }
 
+.img1 {
+  background-image: url("./assets/Cloudy.jpj");
+}
+.img2 {
+  background-image: url("./assets/Rain.jpj");
+}
+.img3 {
+  background-image: url("./assets/Storm.jpj");
+}
+.img4 {
+  background-image: url("./assets/Sun.jpj");
+}
 
+@media (max-width: 570px) {
+  .all .description{
+  right: -50%;
+  transform-origin: 0 0;
+  transform: rotate(0);
+  flex-direction:  column;
+bottom: 65%;
+  }
+  .description img{
+    transform: rotate(0);
+    
+  }
+}
 
 
