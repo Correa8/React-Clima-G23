@@ -90,6 +90,19 @@ form{
   
 }
 
+.img1 {
+  background-image: url("./assets/Cloudy.jpj");
+}
+.img2 {
+  background-image: url("./assets/Rain.jpj");
+}
+.img3 {
+  background-image: url("./assets/Storm.jpj");
+}
+.img4 {
+  background-image: url("./assets/Sun.jpj");
+}
+
 
 
 
