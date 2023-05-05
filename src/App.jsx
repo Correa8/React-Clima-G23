@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from './components/Loader';
+import './app.css';
 const App = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [location, setLocation] = useState(null);
 
+  const [gradesCel, setGradesCel] = useState(true);
   navigator.geolocation.getCurrentPosition((position) => {
     setLongitude(position.coords.longitude);
     setLatitude(position.coords.latitude);
@@ -53,8 +55,24 @@ const App = () => {
                     {location?.name}, {location.sys.country}{' '}
                   </p>
                 </div>
-                <div className="temp">
-                  <h2>{Math.floor(location?.main.temp - 273.15)}°C </h2>
+                <div className="container__temp">
+                  <div className="temp">
+                    {gradesCel ? (
+                      <h2> {Math.floor(location?.main.temp - 273.15)}°C </h2>
+                    ) : (
+                      <h2>
+                        {' '}
+                        {Math.floor(((location?.main.temp - 273.15) * 9) / 5 + 32)}°F
+                      </h2>
+                    )}
+                    <button
+                      onClick={() => setGradesCel(!gradesCel)}
+                      className="button bg-slate-400 hover:bg-slate-700 py-1 rounded-lg"
+                    >
+                      {' '}
+                      Show in {gradesCel ? <span>°F</span> : <span>°C</span>}
+                    </button>
+                  </div>
                 </div>
                 <div className="flex description">
                   <img
@@ -70,19 +88,19 @@ const App = () => {
                   {location.main ? (
                     <p className="bold">{location.main.humidity}%</p>
                   ) : null}
-                  <p>Humidity:</p>
+                  <p>Humidity</p>
                 </div>
                 <div className="fahrenheit">
                   {location.main ? (
-                    <p className="bold">{location.main.feels_like.toFixed()}K</p>
+                    <p className="bold">{location.wind.speed} m/s</p>
                   ) : null}
-                  <p>Kelvin:</p>
+                  <p>Wind Vel</p>
                 </div>
                 <div className="presion">
                   {location.main ? (
-                    <p className="bold">{location.main.pressure}P</p>
+                    <p className="bold">{location.main.pressure} hPa</p>
                   ) : null}
-                  <p>Pressure:</p>
+                  <p>Pressure</p>
                 </div>
               </div>
             </div>
